@@ -27,7 +27,7 @@
   background-size: cover;         /* image full cover kare */
   background-position: center;    /* center me align */
   background-repeat: no-repeat;
-  min-height: 100vh;              /* poora screen cover kare */
+  /* min-height: 100vh;              poora screen cover kare */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -154,6 +154,7 @@
 
 
 /* Enquiry Form */
+/* ===== Enquiry Form Container ===== */
 .enquiry-container {
   max-width: 500px;
   margin: 50px auto;
@@ -161,8 +162,10 @@
   background: #ffffff;
   border-radius: 16px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  font-family: "Poppins", sans-serif;
 }
 
+/* ===== Form Title ===== */
 .form-title {
   text-align: center;
   font-size: 28px;
@@ -171,12 +174,14 @@
   color: #2c3e50;
 }
 
+/* ===== Form Layout ===== */
 .enquiry-form {
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
 
+/* ===== Inputs, Select, Textarea ===== */
 .enquiry-form input,
 .enquiry-form select,
 .enquiry-form textarea {
@@ -185,6 +190,7 @@
   border-radius: 10px;
   font-size: 16px;
   transition: 0.3s ease;
+  font-family: inherit;
 }
 
 .enquiry-form input:focus,
@@ -195,11 +201,52 @@
   box-shadow: 0 0 6px rgba(74, 144, 226, 0.3);
 }
 
+/* ===== Textarea ===== */
 textarea {
   resize: none;
   min-height: 100px;
 }
 
+/* ===== Registration Fees (Horizontal Layout) ===== */
+.radio-group {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 16px;
+  color: #2c3e50;
+}
+
+.radio-group label:first-child {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.radio-options {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.radio-options label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.radio-options label:hover {
+  color: #4a90e2;
+}
+
+.radio-options input[type="radio"] {
+  accent-color: #4a90e2;
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+}
+
+/* ===== Submit Button ===== */
 .submit-btn {
   background: #4a90e2;
   color: #fff;
@@ -209,12 +256,14 @@ textarea {
   border-radius: 10px;
   cursor: pointer;
   transition: 0.3s;
+  font-weight: 500;
 }
 
 .submit-btn:hover {
   background: #357ab7;
 }
 
+/* ===== Success & Error Messages ===== */
 .success-msg {
   margin-top: 15px;
   text-align: center;
@@ -229,7 +278,7 @@ textarea {
   font-weight: 500;
 }
 
-/* Responsive */
+/* ===== Responsive ===== */
 @media (max-width: 600px) {
   .enquiry-container {
     margin: 20px;
@@ -239,7 +288,22 @@ textarea {
   .form-title {
     font-size: 24px;
   }
+
+  .submit-btn {
+    font-size: 16px;
+  }
+
+  .radio-group {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .radio-options {
+    gap: 15px;
+  }
 }
+
 
 /* registration search */
 
@@ -1344,28 +1408,43 @@ h2 {
 
 
 /* dashboard */
+/* ------------------- GENERAL ------------------- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background: #f4f7f6;
+  color: #333;
+}
+
+/* ------------------- DASHBOARD CONTAINER ------------------- */
 .dashboard-container {
   display: flex;
   min-height: 100vh;
-  font-family: 'Arial', sans-serif;
-  background: #f4f7f6;
+  flex-direction: row;
+  transition: all 0.3s ease;
   position: relative;
 }
 
+/* ------------------- NOTIFICATION ------------------- */
 .notification {
   position: fixed;
   top: 20px;
   right: 20px;
   background: #4caf50;
   color: white;
-  padding: 15px;
+  padding: 15px 20px;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  box-shadow: 0 0 12px rgba(0,0,0,0.2);
   z-index: 100;
+  font-size: 0.9rem;
 }
 
-
-/* sidebar */
+/* ------------------- SIDEBAR ------------------- */
 .sidebar {
   width: 220px;
   background: #1f2937;
@@ -1373,6 +1452,7 @@ h2 {
   padding: 20px;
   display: flex;
   flex-direction: column;
+  transition: all 0.3s ease;
 }
 
 .profile {
@@ -1381,43 +1461,56 @@ h2 {
 }
 
 .profile-pic {
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
   margin-bottom: 10px;
+  object-fit: cover;
 }
 
 .menu button {
   display: block;
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   margin-bottom: 10px;
   background: none;
   color: white;
   border: none;
   text-align: left;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  transition: 0.2s;
 }
 
-.menu button.active, .menu button:hover {
+.menu button.active, 
+.menu button:hover {
   background: #4caf50;
 }
 
-
-/* content */
+/* ------------------- MAIN CONTENT ------------------- */
 .content {
   flex: 1;
   padding: 20px;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.content .search-bar {
-  margin-bottom: 20px;
-}
-
+/* ------------------- SEARCH BAR ------------------- */
 .content .search-bar input {
   width: 100%;
-  padding: 10px;
+  padding: 10px 15px;
   border-radius: 8px;
   border: 1px solid #ccc;
+  font-size: 0.95rem;
+}
+
+/* ------------------- TABLES ------------------- */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
 }
 
 .content table {
@@ -1426,38 +1519,37 @@ h2 {
   background: white;
   border-radius: 8px;
   overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  min-width: 600px; /* ensures horizontal scroll for many columns */
 }
 
-  th, table td {
+th, td {
   padding: 12px;
   border-bottom: 1px solid #ddd;
   text-align: left;
+  word-break: break-word;
+  font-size: 0.9rem;
 }
 
- .content table th {
+.content table th {
   background: #4caf50;
   color: white;
+  font-weight: 500;
 }
 
- .content table tr:hover {
+.content table tr:hover {
   background: #f1f1f1;
 }
 
+/* ------------------- FORMS ------------------- */
 .create-form {
   background: white;
   padding: 20px;
-  border-radius: 8px;
-}
-
-
-/* create HR/Admin by super-admin */
-.create-form {
-  background: #fff;
-  padding: 20px;
   border-radius: 12px;
   max-width: 500px;
-  margin: 30px auto;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  width: 100%;
+  margin: 0 auto;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 .create-user-form {
@@ -1468,18 +1560,21 @@ h2 {
 
 .create-user-form input,
 .create-user-form select {
-  padding: 10px;
+  padding: 10px 12px;
   border: 1px solid #ccc;
   border-radius: 6px;
+  font-size: 0.95rem;
 }
 
 .create-user-form button {
-  padding: 10px;
+  padding: 12px;
   background: #007bff;
   color: white;
   border: none;
   border-radius: 6px;
   cursor: pointer;
+  font-size: 0.95rem;
+  transition: 0.2s;
 }
 
 .create-user-form button:hover {
@@ -1489,5 +1584,90 @@ h2 {
 .message {
   color: green;
   margin-bottom: 10px;
+  font-size: 0.9rem;
 }
 
+/* ------------------- CARDS / DYNAMIC CONTENT ------------------- */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: 0.2s;
+}
+
+.card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* ------------------- RESPONSIVE ------------------- */
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 200px;
+    padding: 15px;
+  }
+
+  .menu button {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 10px;
+    overflow-x: auto;
+  }
+
+  .menu button {
+    margin-bottom: 0;
+    flex: 1;
+    text-align: center;
+  }
+
+  .content {
+    padding: 15px;
+  }
+
+  .create-form {
+    margin: 20px 10px;
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-pic {
+    width: 60px;
+    height: 60px;
+  }
+
+  .menu button {
+    font-size: 0.8rem;
+    padding: 8px;
+  }
+
+  th, td {
+    padding: 8px;
+    font-size: 0.8rem;
+  }
+
+  .create-user-form input,
+  .create-user-form select,
+  .create-user-form button {
+    font-size: 0.85rem;
+    padding: 8px;
+  }
+}

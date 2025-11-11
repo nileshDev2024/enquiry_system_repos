@@ -50,7 +50,7 @@ const Sidebar = ({ activeTab, setActiveTab, user }) => {
           width={100}
           height={100}
         />
-        <div>{user.name || "User Name"}</div>
+        {/* <div>{user.name || "User Name"}</div> */}
         <div className="role">{role}</div>
       </div>
 

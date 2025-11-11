@@ -7,6 +7,7 @@ const EnquiryForm = () => {
     email: "",
     course: "",
     mobile: "",
+    registrationFees: "", // <-- Added field
     Enquiry_Message: "",
   });
 
@@ -15,14 +16,14 @@ const EnquiryForm = () => {
 
   const courses = [
     "Web Development",
-    "Mongoose db",
-    "Mern-stack",
-    "Full-Stack",
+    "Mongoose DB",
+    "MERN Stack",
+    "Full Stack",
     "Video Editing",
     "Digital Marketing",
     "Node.js",
-    "Frontend development",
-    "backend Development",
+    "Frontend Development",
+    "Backend Development",
     "AI",
     "C & C++",
     "SQL",
@@ -44,6 +45,7 @@ const EnquiryForm = () => {
         email: "",
         course: "",
         mobile: "",
+        registrationFees: "",
         Enquiry_Message: "",
       });
     } catch (err) {
@@ -73,12 +75,7 @@ const EnquiryForm = () => {
           required
         />
 
-        <select
-          name="course"
-          value={form.course}
-          onChange={handleChange}
-          required
-        >
+        <select name="course" value={form.course} onChange={handleChange} required>
           <option value="">Select Course</option>
           {courses.map((course, i) => (
             <option key={i} value={course}>
@@ -96,16 +93,47 @@ const EnquiryForm = () => {
           required
         />
 
+        {/* ✅ Registration Fees Radio Buttons */}
+        <div className="radio-group">
+          <label>Registration Fees:</label>
+          <div className="radio-options">
+            <label>
+              <input
+                type="radio"
+                name="registrationFees"
+                value="Yes"
+                checked={form.registrationFees === "Yes"}
+                onChange={handleChange}
+                required
+              />
+              Yes
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="registrationFees"
+                value="No"
+                checked={form.registrationFees === "No"}
+                onChange={handleChange}
+                required
+              />
+              No
+            </label>
+          </div>
+        </div>
+
         <textarea
           name="Enquiry_Message"
           placeholder="Write your enquiry..."
-          spellCheck= "true"
+          spellCheck="true"
           value={form.Enquiry_Message}
           onChange={handleChange}
           required
         />
 
-        <button type="submit" className="submit-btn">Submit</button>
+        <button type="submit" className="submit-btn">
+          Submit
+        </button>
       </form>
 
       {message && <p className="success-msg">{message}</p>}

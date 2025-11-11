@@ -45,28 +45,92 @@
 // module.exports = { createAdminOrHR };
 
 
+// const bcrypt = require("bcrypt");
+// const User = require("../Models/User");
+// const jwt = require("jsonwebtoken");
+
+// // Only Super Admin can create Admin or HR
+// const createAdminOrHR = async (req, res) => {
+//   try {
+//     const { name, email, password, role } = req.body;
+
+//     // Only allow admin or HR
+//     if (!["admin", "HR"].includes(role)) return res.status(400).json({ msg: "Invalid role" });
+
+//     // Only Super Admin can create
+//     if (!req.user || req.user.role !== "super-admin") {
+//       return res.status(403).json({ msg: "Only Super Admin can create Admin or HR" });
+//     }
+
+//     const existingUser = await User.findOne({ email });
+//     if (existingUser) return res.status(400).json({ msg: "Email already exists" });
+
+//     const hashedPassword = await bcrypt.hash(password, 10);
+
+//     const newUser = new User({
+//       name,
+//       email,
+//       password: hashedPassword,
+//       role,
+//       isVerified: true,
+//     });
+
+//     await newUser.save();
+
+//     // Generate token using same secret
+//     const token = jwt.sign(
+//       { id: newUser._id, role: newUser.role },
+//       process.env.JWT_SECRET,
+//       { expiresIn: "1h" }
+//     );
+
+//     res.status(201).json({ msg: `${role} created successfully`, user: { name, email, role }, token });
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ msg: "Error creating user", error: err.message });
+//   }
+// };
+
+// module.exports = { createAdminOrHR };
+
+
+
+
+
 const bcrypt = require("bcrypt");
 const User = require("../Models/User");
 const jwt = require("jsonwebtoken");
 
-// Only Super Admin can create Admin or HR
+// ✅ Create Admin or HR (Only Super Admin allowed)
 const createAdminOrHR = async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
 
-    // Only allow admin or HR
-    if (!["admin", "HR"].includes(role)) return res.status(400).json({ msg: "Invalid role" });
-
-    // Only Super Admin can create
-    if (!req.user || req.user.role !== "super-admin") {
-      return res.status(403).json({ msg: "Only Super Admin can create Admin or HR" });
+    // 1️⃣ Validate required fields
+    if (!name || !email || !password || !role) {
+      return res.status(400).json({ msg: "All fields are required" });
     }
 
-    const existingUser = await User.findOne({ email });
-    if (existingUser) return res.status(400).json({ msg: "Email already exists" });
+    // 2️⃣ Check for valid roles
+    if (!["admin", "HR"].includes(role)) {
+      return res.status(400).json({ msg: "Invalid role. Only admin or HR can be created." });
+    }
 
+    // 3️⃣ Check if logged-in user is Super Admin
+    if (!req.user || req.user.role !== "super-admin") {
+      return res.status(403).json({ msg: "Access denied. Only Super Admin can create Admin or HR." });
+    }
+
+    // 4️⃣ Check for existing user with same email
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ msg: "Email already exists. Please use another one." });
+    }
+
+    // 5️⃣ Hash password securely
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    // 6️⃣ Create new user
     const newUser = new User({
       name,
       email,
@@ -77,17 +141,27 @@ const createAdminOrHR = async (req, res) => {
 
     await newUser.save();
 
-    // Generate token using same secret
+    // 7️⃣ Generate a new token
     const token = jwt.sign(
       { id: newUser._id, role: newUser.role },
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
 
-    res.status(201).json({ msg: `${role} created successfully`, user: { name, email, role }, token });
+    // 8️⃣ Respond with success message
+    res.status(201).json({
+      msg: `${role} created successfully`,
+      user: {
+        name: newUser.name,
+        email: newUser.email,
+        role: newUser.role,
+      },
+      token,
+    });
+
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ msg: "Error creating user", error: err.message });
+    console.error("❌ Error creating Admin/HR:", err);
+    res.status(500).json({ msg: "Internal Server Error", error: err.message });
   }
 };
 

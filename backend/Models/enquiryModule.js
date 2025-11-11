@@ -43,6 +43,7 @@ const enquirySchema = new mongoose.Schema({
   email: { type: String, required: true },
   course: { type: String, required: true },
   mobile: { type: String, required: true },
+  registrationFees: {type: String, required: true},
   Enquiry_Message: { type: String, required: true },
   createdBy: { type: String, required: true },  
   updatedBy: { type: String },                  

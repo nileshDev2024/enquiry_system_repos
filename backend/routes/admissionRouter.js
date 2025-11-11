@@ -18,7 +18,7 @@ const { authMiddleware, authorizeRoles } = require("../middlewares/authMiddlewar
 const admissionRouter = express.Router();
 
 // Create admission (any authenticated user)
-admissionRouter.post("/admission_create", authMiddleware, createAdmission);
+admissionRouter.post("/admission_create", createAdmission);
 
 // Get all admissions (admin/HR)
 admissionRouter.get("/all", authMiddleware, authorizeRoles("admin", "super-admin", "HR"), getAdmissions);

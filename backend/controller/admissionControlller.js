@@ -284,49 +284,119 @@
 const admissionModule = require("../Models/admissionModule");
 
 // Create Admission
+// const createAdmission = async (req, res) => {
+//   try {
+//     const { fullName, mobile, email, course, payment } = req.body;
+
+//     if (!fullName || !mobile || !email || !course || !payment?.firstInstallment) {
+//       return res.status(400).json({ success: false, message: "All required fields must be filled" });
+//     }
+
+//     // Check if user already admitted
+//     const existingAdmission = await admissionModule.findOne({ mobile });
+//     if (existingAdmission) return res.status(400).json({ success: false, message: "User already admitted" });
+
+//     // Email & mobile uniqueness check
+//     const emailExists = await admissionModule.findOne({ email });
+//     if (emailExists) return res.status(400).json({ success: false, message: "Email already registered" });
+
+//     const mobileExists = await admissionModule.findOne({ mobile });
+//     if (mobileExists) return res.status(400).json({ success: false, message: "Mobile already registered" });
+
+//     // Mobile validation
+//     if (!/^[0-9]{10}$/.test(mobile)) {
+//       return res.status(400).json({ success: false, message: "Mobile number must be exactly 10 digits" });
+//     }
+
+//     // Validate transactionId for "online"
+//     ["firstInstallment", "secondInstallment"].forEach((inst) => {
+//       if (payment[inst]?.mode === "online" && !payment[inst].transactionId) {
+//         throw new Error(`${inst} requires transaction ID for online payment`);
+//       }
+//     });
+
+//     const admission = await admissionModule.create({
+//       fullName,
+//       mobile,
+//       email,
+//       course,
+//       payment,
+//       createdBy: req.user?.role || "User",
+//       // createdBy: req.user.role ||  "User", // Backend sets creator
+//     });
+
+//     res.status(201).json({ success: true, message: "Admission created successfully", data: admission });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(400).json({ success: false, message: error.message });
+//   }
+// };
 const createAdmission = async (req, res) => {
   try {
     const { fullName, mobile, email, course, payment } = req.body;
 
     if (!fullName || !mobile || !email || !course || !payment?.firstInstallment) {
-      return res.status(400).json({ success: false, message: "All required fields must be filled" });
+      return res.status(400).json({
+        success: false,
+        message: "All required fields must be filled",
+      });
     }
 
-    // Check if user already admitted
+    // Prevent duplicate admissions
     const existingAdmission = await admissionModule.findOne({ mobile });
-    if (existingAdmission) return res.status(400).json({ success: false, message: "User already admitted" });
+    if (existingAdmission)
+      return res
+        .status(400)
+        .json({ success: false, message: "User already admitted" });
 
-    // Email & mobile uniqueness check
+    // Email uniqueness check
     const emailExists = await admissionModule.findOne({ email });
-    if (emailExists) return res.status(400).json({ success: false, message: "Email already registered" });
+    if (emailExists)
+      return res
+        .status(400)
+        .json({ success: false, message: "Email already registered" });
 
-    const mobileExists = await admissionModule.findOne({ mobile });
-    if (mobileExists) return res.status(400).json({ success: false, message: "Mobile already registered" });
-
-    // Mobile validation
+    // Validate mobile format
     if (!/^[0-9]{10}$/.test(mobile)) {
-      return res.status(400).json({ success: false, message: "Mobile number must be exactly 10 digits" });
+      return res.status(400).json({
+        success: false,
+        message: "Mobile number must be exactly 10 digits",
+      });
     }
 
-    // Validate transactionId for "online"
+    // 🧹 Clean up 2nd installment if mode is empty or missing
+    if (
+      !payment.secondInstallment ||
+      !payment.secondInstallment.mode ||
+      payment.secondInstallment.mode.trim() === ""
+    ) {
+      delete payment.secondInstallment;
+    }
+
+    // ✅ Validate transactionId only for "online" payments
     ["firstInstallment", "secondInstallment"].forEach((inst) => {
       if (payment[inst]?.mode === "online" && !payment[inst].transactionId) {
         throw new Error(`${inst} requires transaction ID for online payment`);
       }
     });
 
+    // ✅ Create admission
     const admission = await admissionModule.create({
       fullName,
       mobile,
       email,
       course,
       payment,
-      createdBy: req.user.role || "User", // Backend sets creator
+      createdBy: req.user?.role || "User",
     });
 
-    res.status(201).json({ success: true, message: "Admission created successfully", data: admission });
+    res.status(201).json({
+      success: true,
+      message: "Admission created successfully",
+      data: admission,
+    });
   } catch (error) {
-    console.error(error);
+    console.error("Create Admission Error:", error);
     res.status(400).json({ success: false, message: error.message });
   }
 };

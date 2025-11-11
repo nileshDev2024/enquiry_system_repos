@@ -18,7 +18,7 @@ const CreateUser = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage("");
-    setError("");
+    setError(""); 
 
     try {
       const res = await createAdminOrHR(form);

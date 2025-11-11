@@ -32,7 +32,7 @@ const { authMiddleware, authorizeRoles } = require("../middlewares/authMiddlewar
 const registrationrouter = express.Router();
 
 // Create new student registration (open to authenticated user)
-registrationrouter.post('/register', authMiddleware, createRegistration);
+registrationrouter.post('/register', createRegistration);
 
 // Get single registration by ID (authenticated)
 registrationrouter.get("/get_user/:id", authMiddleware, getRegistrationUser);
@@ -52,8 +52,8 @@ registrationrouter.put(
   updateRegistration
 );
 
-// Search registration by mobile number (authenticated)
-registrationrouter.get("/search/:mobile", authMiddleware, getRegistrationByMobile);
+// Search registration by mobile number
+registrationrouter.get("/search/:mobile", getRegistrationByMobile);
 
 // Get all registered users (admin/HR)
 registrationrouter.get(

@@ -19,7 +19,7 @@ const { authMiddleware, authorizeRoles } = require("../middlewares/authMiddlewar
 const enquiryRouter = express.Router();
 
 // Create enquiry (any authenticated user)
-enquiryRouter.post("/Create_enquiry", authMiddleware, createnquiry);
+enquiryRouter.post("/Create_enquiry", createnquiry);
 
 // Update enquiry (admin/super-admin or creator)
 enquiryRouter.put("/update_enquiry/:id", authMiddleware, updateenquiry);

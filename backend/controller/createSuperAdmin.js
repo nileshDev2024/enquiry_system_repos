@@ -37,7 +37,7 @@ const createSuperAdmin = async () => {
     console.log("DB Connected");
 
     const existing = await User.findOne({ role: "super-admin" });
-    if (existing) {
+    if (existing){
       console.log("Super Admin already exists:", existing.email);
       return process.exit();
     }

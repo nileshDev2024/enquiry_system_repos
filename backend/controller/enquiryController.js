@@ -159,19 +159,14 @@
 
 
 
-
-
-
-
-
 const enquiryModule = require("../Models/enquiryModule");
 
 // Create Enquiry
 const createnquiry = async (req, res) => {
   try {
-    const { name, email, course, mobile, Enquiry_Message } = req.body;
+    const { name, email, course, mobile, registrationFees, Enquiry_Message } = req.body;
 
-    if (!name || !email || !course || !mobile || !Enquiry_Message) {
+    if (!name || !email || !course || !mobile || !Enquiry_Message || !registrationFees) {
       return res.status(400).json({ success: false, message: "All fields are required" });
     }
 
@@ -180,8 +175,10 @@ const createnquiry = async (req, res) => {
       email,
       course,
       mobile,
+      registrationFees,
       Enquiry_Message,
-      createdBy: req.user.role || "User", // backend sets creator from logged-in user
+      createdBy: req.user?.role || "User"
+      // createdBy: req.user.role || "User", // backend sets creator from logged-in user
     });
 
     return res.status(201).json({
