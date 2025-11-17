@@ -770,6 +770,7 @@ h2 {
 
 /* Navbar */
 /* Navbar.css */
+/* Default Navbar */
 .navbar {
   display: flex;
   align-items: center;
@@ -784,6 +785,7 @@ h2 {
 
 .logo img {
   width: 100px;
+  cursor: pointer;
 }
 
 /* Center nav */
@@ -805,24 +807,33 @@ h2 {
 .nav-center button:hover {
   color: #00d8ff;
 }
-.enquiry-btn-mobile{
-  display: none;
-}
-/* Enquiry button */
-.nav-right .enquiry-btn,
-.enquiry-btn-mobile {
-  background-color : rgb(197, 157, 57);
+
+/* Desktop signup button */
+.nav-right .signup-btn {
+  background-color: rgb(197, 157, 57);
   border: none;
   padding: 10px 20px;
-  border-radius: 5px;
+  border-radius: 6px;
   color: white;
   cursor: pointer;
-  transition: 0.3s;
+  transition: 0.3s ease;
 }
 
-.nav-right .enquiry-btn:hover,
-.enquiry-btn-mobile:hover {
-  background-color:  rgb(241, 176, 11);
+.nav-right .signup-btn:hover {
+  background-color: rgb(241, 176, 11);
+}
+
+/* Hidden mobile signup button by default */
+.signup-btn-mobile {
+  display: none;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+ 
 }
 
 /* Hamburger */
@@ -844,22 +855,22 @@ h2 {
   display: none;
 }
 
-/* Responsive for mobile */
+/* 🔥 Responsive (Mobile) */
 @media (max-width: 768px) {
   .nav-center {
     position: fixed;
     top: 0;
     right: -100%;
     width: 100vw;
-    height: 50vh;
+    height: 60vh;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     gap: 25px;
     padding-top: 50px;
     background-color: #0d1117;
     transition: right 0.3s ease;
-    box-shadow: -2px 0 10px rgba(0,0,0,0.5);
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.5);
     z-index: 999;
   }
 
@@ -877,41 +888,45 @@ h2 {
     display: block;
   }
 
-  /* Hide desktop enquiry button */
+  /* Hide desktop signup button */
   .nav-right {
     display: none;
+  }
+
+  /* ✅ Show and style Signup button on mobile */
+  .signup-btn-mobile {
+    display: block;
+    background: linear-gradient(135deg, #ff7e5f, #feb47b);
+    box-shadow: 0 4px 15px rgba(255, 126, 95, 0.4);
+    animation: colorPulse 3s infinite alternate;
+  }
+
+  .signup-btn-mobile:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(255, 126, 95, 0.6);
+  }
+
+  /* Smooth color animation */
+  @keyframes colorPulse {
+    0% {
+      background: linear-gradient(135deg, #ff7e5f, #feb47b);
+    }
+    100% {
+      background: linear-gradient(135deg, #ffb347, #ffcc33);
+    }
   }
 
   /* Show hamburger */
   .hamburger {
     display: flex;
   }
-
-  /* Show Enquiry inside mobile menu */
-  .enquiry-btn-mobile {
-    display: block;
-  }
 }
+
 /* -------------------About---------------------------- */
 .about_section h1{
   text-align: center;
   color: #fff;
 }
-
-
-/* signup form */
-/* Body Background */
-/* body { */
-  /* font-family: "Poppins", sans-serif;
-  background: linear-gradient(135deg, #6c63ff, #00c6ff);
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center; */
-/* } */
-
 /* -----------------------------------------Auth Form------------------------------------*/
 .auth_main {
   display: flex;

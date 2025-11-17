@@ -239,7 +239,7 @@ export const Home = () => {
         `http://localhost:5000/codeofschool/delete_user/${id}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`, // ✅ attach token for delete
+            Authorization: `Bearer ${token}`, // attach token for delete
           },
         }
       );
