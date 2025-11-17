@@ -18,7 +18,7 @@
 //       enum: ["Web Development", "Mongoose db", "Mern-stack","Full-Stack","Video Editing", "Digital Marketing","Node.js","Frontend development","backend Developmene",
 //           //  "AI", "C & C++", "SQL",
 //       ], 
-    
+
 //     },
 //     mobile: {
 //       type: String,
@@ -43,10 +43,14 @@ const enquirySchema = new mongoose.Schema({
   email: { type: String, required: true },
   course: { type: String, required: true },
   mobile: { type: String, required: true },
-  registrationFees: {type: String, required: true},
+  registrationFees: {
+    type: String,
+    enum: ["Yes", "No"],
+    required: true,
+  },
   Enquiry_Message: { type: String, required: true },
-  createdBy: { type: String, required: true },  
-  updatedBy: { type: String },                  
+  createdBy: { type: String, required: true },
+  updatedBy: { type: String },
 }, { timestamps: true });
 
 module.exports = mongoose.model("enquirydata", enquirySchema);
